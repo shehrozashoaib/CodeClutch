@@ -1,0 +1,8 @@
+# Install the libraries required by the USER'S project here.
+# This file is intentionally separate from requirements-agent.txt so the
+# debugging agent runtime does not pollute the user's execution environment.
+#
+# Example:
+# numpy>=2.0
+# pandas>=2.2
+# torch>=2.2
