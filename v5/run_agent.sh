@@ -12,4 +12,5 @@ if [ -n "${CUDA_HOME:-}" ]; then
   export CUDACXX="${CUDACXX:-$CUDA_HOME/bin/nvcc}"
   export LD_LIBRARY_PATH="$CUDA_HOME/lib64:$CUDA_HOME/targets/x86_64-linux/lib:${LD_LIBRARY_PATH:-}"
 fi
+"/workspace/.venvs/agent/bin/python" "/workspace/preflight_agent.py" --root-dir "/workspace"
 exec "/workspace/.venvs/agent/bin/python" "/workspace/system_debug_cli.py" "$@"

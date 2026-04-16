@@ -953,14 +953,27 @@ def verify_python_syntax(code_string: str) -> Optional[str]:
 
 
 def check_syntax(file_path: str) -> str:
-    """Use pyflakes to check for syntax/name errors in a file."""
+    """Use pyflakes when available, with a safe syntax-only fallback."""
 
-    result = subprocess.run(
-        ["pyflakes", file_path], capture_output=True, text=True
-    )
-    if result.returncode != 0:
-        return f"Syntax/Name Error detected: {result.stdout}"
-    return "OK"
+    try:
+        result = subprocess.run(
+            [sys.executable, "-m", "pyflakes", file_path],
+            capture_output=True,
+            text=True,
+        )
+        output = (result.stdout or result.stderr or "").strip()
+        if result.returncode != 0:
+            return f"Syntax/Name Error detected: {output}"
+        return "OK"
+    except Exception:
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                syntax_error = verify_python_syntax(f.read())
+            if syntax_error:
+                return f"Syntax Error detected: {syntax_error}"
+            return "OK"
+        except Exception as e:
+            return f"Syntax check unavailable: {e}"
 
 
 class NoAction(BaseModel):
