@@ -241,4 +241,4 @@ The CLI remembers the last target file and script arguments as defaults for the 
 
 ## License
 
-TBD — a permissive license (MIT or Apache-2.0) will be added before public launch.
+MIT — see [`LICENSE`](./LICENSE).
